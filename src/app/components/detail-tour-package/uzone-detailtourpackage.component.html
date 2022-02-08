@@ -1,0 +1,179 @@
+<section id="">
+	<div class="header">
+		<div class="back-btn-show" (click)="backClicked()"><img src="assets/img/back-page.png"> Detail Product Tour</div>
+	</div>
+	<div class="detail-package">
+		<div class="ons-detail">
+			<div class="main-img">
+				<carousel [sources]="images" [config]="config"></carousel>
+			</div>
+			<div class="detail-content">
+				<div class="detail-box">
+					<h2>{{  bannerDetail?.detailtours.data.name }}</h2>
+						<div class="price">
+							<p class="old" *ngIf="disc">Rp. {{ bannerDetail?.detailtours.data.actual_price | number }}</p>
+							<p class="now">Rp. {{ bannerDetail?.detailtours.data.display_price | number }}
+								<span class="disc"  *ngIf="discpage">Hemat {{ percent_discount }} %</span>
+								<span class="stock" *ngIf="moreform">Tersedia {{ stock }} paket</span>
+								<span class="stockhabis" *ngIf="empstock">Maaf {{  bannerDetail?.detailtours.data.name }} Sudah Habis</span>
+							</p>
+						</div>
+						<hr>
+						<ul class="list-type-inside-list list-detail" *ngFor="let fasilitas of facility">
+							<li style="list-style-type: square;">{{ fasilitas }}</li>
+						</ul>
+						<hr>
+						<ul class="list-type-inside-list list-detail" *ngFor="let deskripsi of description">
+							<li>{{ deskripsi }}</li>
+						</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="ons-detail">
+			<div id="accordion" class="expandable-accordion">
+				<div class="box-expand expandable-accordion">
+					<input id="toggle-1" type="checkbox">
+					<label for="toggle-1"><h3>Apa yang Bisa Kamu Lakukan</h3></label>
+					<div id="expand" class="expand">
+						<div class="expandable-content">
+							<div class="panel-body">
+								<div [innerHTML]="bannerDetail?.detailtours.data.activity | inhtml"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box-expand expandable-accordion">
+					<input id="toggle-2" type="checkbox">
+					<label for="toggle-2"><h3>Informasi Aktivitas</h3></label>
+					<div id="expand" class="expand">
+						<div class="expandable-content">
+							<div class="panel-body">
+								<h4 class="list-header">Harga Sudah Termasuk</h4>
+									<ul class="list-type-inside-list" *ngFor="let inklusif of inclusive ">
+										<li>{{ inklusif }}</li>
+									</ul>
+								<h4 class="list-header">Harga Belum Termasuk</h4>
+									<ul class="list-type-inside-list" *ngFor="let ekslusif of exclusive">
+										<li>{{ ekslusif }}</li>
+									</ul>
+								<h4 class="list-header">Konfirmasi</h4>
+									<ul class="list-type-inside-list" *ngFor="let konfirmasi of confirmation">
+										<li>{{ konfirmasi }}</li>
+									</ul>
+								<h4 class="list-header">Rencana Perjalanan</h4>
+									<ul class="list-type-inside-list">
+										<li class="planning-trip" *ngFor="let jam of trip_plan; let i = index">
+											<span class="no"> {{ i + 1 }}</span>
+											<h3>{{ jam.trip_hours_str }}</h3>
+											<h4>{{  jam.title_plan }}</h4>
+											<h4></h4>
+											<p>{{ jam.trip_description }}</p>
+										</li>
+									</ul>						
+								<div class="further-information">
+								<h4 class="list-header"><i class="fa fa-info-circle"></i> Informasi Tambahan</h4>
+									<ul class="list-type-inside-list" *ngFor="let informasi of add_information">
+										<li>{{ informasi }}</li>														
+									</ul>
+								<h4 class="list-header"><i class="fa fa-info-circle"></i> Tips Dari Orang Dalam</h4>
+									<ul class="list-type-inside-list" *ngFor="let tipsdod of tips">
+										<li>{{ tipsdod }}</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+									
+
+				<div class="box-expand expandable-accordion">
+					<input id="toggle-3" type="checkbox">
+					<label for="toggle-3"><h3>Cara Pemakaian Tiket</h3></label>
+					<div id="expand" class="expand">
+						<div class="expandable-content">
+							<div class="panel-body">
+									<ul class="list-type-inside-list" *ngFor="let tiket of use_ticket">
+										<li>{{ tiket }}</li>
+									</ul>
+								<h4 class="list-header">Jam Buka</h4>
+									<ul class="list-type-inside-list" *ngFor="let jambuka of opening_hours">
+										<li>{{ jambuka }}</li>
+									</ul>
+								<h4 class="list-header">Cara Menuju Lokasi</h4>
+									<ul class="list-type-inside-list" *ngFor="let cml of location">
+										<li>{{ cml }}</li>
+									</ul>
+									<div class="map-box">									
+										<div id="map_canvas" style="color:black;" #googleMap class="map"></div>
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+									
+				<div class="box-expand expandable-accordion">
+					<input id="toggle-4" type="checkbox">
+					<label for="toggle-4"><h3>Kebijakan Pembatalan</h3></label>
+					<div id="expand" class="expand">
+							<div class="expandable-content">
+								<div class="panel-body">
+									<ul class="list-type-inside-list" *ngFor="let pembatalan of canceled_policy">
+										<li>{{ pembatalan }}</li>												 
+									</ul>
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="related-items">
+			<div class="carousel-detail">
+				<h3>Kamu Mungkin Juga Suka</h3>
+				<section class="related-product clearfix">
+					<div class="item-carousel" *ngFor="let opt of otherpackagetour">
+							<a routerLink="/paket-wisata/{{opt.slug}}" (click)="reloadpage()" routerLinkActive="active" >	
+								<div class="main-img"><img src="{{ opt.image }}"></div>
+								<div class="detail-box">
+									<div *ngIf=" opt.percent_discount < 1; else ShowBlock">
+										<!-- <span class="disc">Paket Wisata ini tidak ada Diskon</span> -->
+									</div>
+									<ng-template #ShowBlock>
+										<span class="disc">Hemat {{ opt.percent_discount  }}%</span>
+									</ng-template>
+									<h2>{{ opt.name }}</h2>
+									<div class="price" *ngIf=" opt.stock > 0; else Show ">
+										<div *ngIf=" opt.percent_discount < 1; else Showdisc">
+												<p class="old" style="display:block; margin-top: 40px;"></p>
+										</div>
+										<ng-template #Showdisc>
+												<p class="old">Rp {{ opt.actual_price | number }}</p>
+										</ng-template>
+										<p class="now">Rp {{ opt.display_price | number }}
+										<span>Tersedia akhir pekan ini {{ opt.stock }}</span>
+										</p>										
+									</div>
+
+									<ng-template #Show>
+										<div class="price">
+											<div *ngIf=" opt.percent_discount < 1; else showold">
+											</div>
+											<ng-template #showold>
+													<p class="old">Rp {{ opt.actual_price | number }}</p>
+											</ng-template>
+											<p class="now">Rp {{ opt.display_price | number }}
+											<span style="color:red;">Maaf, Paket Wisata ini sudah habis</span>
+											</p>
+										</div>
+									</ng-template>
+								</div>
+						</a>
+					</div>
+				</section> 
+			</div>
+		</div>		
+		<div class="order-now">
+			<button class="btn" (click)="ordernow()" >Pesan Sekarang</button>
+		</div>
+	</div>
+</section>

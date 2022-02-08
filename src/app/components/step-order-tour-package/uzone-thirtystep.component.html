@@ -1,0 +1,79 @@
+<section id="">
+	<div class="header">
+	    <div class="back-btn-show" (click)="goback()"><img src="assets/img/back-page.png"> Pembayaran</div>
+	</div>
+	
+	<div class="detail-package">
+		<div class="ons-detail">
+			<div class="package-step">
+		 		<ul>
+				    <li class="step done"><span class="center"><span class="no">1</span> Pesan</span></li>
+				    <li class="step done"><span class="center"><span class="no">2</span> Bayar</span></li>
+				    <li class="step done"><span class="center"><span class="no">3</span> Proses</span></li>
+				    <li class="step"><span class="center"><span class="no">4</span> E-Tiket</span></li>
+				</ul>
+		    </div>
+		</div>
+	
+		<div class="ons-detail">
+			<div class="transaction-success">
+				<div class="payment" *ngIf="atmbca"><img src="assets/img/logoATM/BCA_logo.png"><span></span></div>
+				<div class="payment" *ngIf="atmbni"><img src="assets/img/logoATM/BNI_logo.png"><span></span></div>
+				<div class="payment" *ngIf="atmbri"><img src="assets/img/logoATM/BRI_logo.png"><span></span></div>
+				<div class="payment" *ngIf="atmmandiri"><img src="assets/img/logoATM/Mandiri_logo.png"><span></span></div>
+				<div class="payment" *ngIf="atmcimb"><img src="assets/img/logoATM/CIMB_logo.png"><span></span></div>
+				<div class="payment" *ngIf="atmpermatabank"><img src="assets/img/logoATM/Permata_logo.png"><span></span></div>			  
+				<div class="payment" *ngIf="mbbca"><img src="assets/img/logoMBanking/logo-bca.png"><span></span></div>
+				<div class="payment" *ngIf="mbbri"><img src="assets/img/logoMBanking/logo-bri.png"><span></span></div>
+				<div class="payment" *ngIf="mbmandiri"><img src="assets/img/logoMBanking/logo-mandiri.png"><span></span></div>
+				<div class="payment" *ngIf="mbbni"><img src="assets/img/logoMBanking/logo-bni.png"><span></span></div>
+				<div class="payment" *ngIf="alfamart"><img src="assets/img/Payment_Alfamart.png"><span></span></div>
+				<div class="payment" *ngIf="indomaret"><img src="assets/img/Payment_Indomaret.png"><span></span></div>
+				<h3 class="trans-title">Pesanan Berhasil: {{ bannerDetail?.detailtours.data.name }}</h3>
+				<h4 class="say-thanks payment-code">Gunakan Kode Pembayaran dibawah dan segera selesaikan pembayaran sebelum waktu habis</h4>
+				<h2 class="time-left">
+					<p id="demo">
+					<count-down [text]="text" units="Hours | Minutes | Seconds " end="{{ paymentcode.transaction_detail.expired_at }}"></count-down>
+					</p>
+				</h2>
+			</div>
+
+			<div class="total-order">
+				<h4 class="list-header grey text-center">Kode Pembayaran</h4>
+				<ul class="transaction-success no-margin-top">
+					<li class="trans-subtitle text-center">{{ paymentcode.payment_code }}</li>
+					<li><a (click)="copyText(paymentcode.payment_code)" value="click to copy" class="copy text-center" showOnClick><u>Salin Kode Pembayaran</u></a></li>
+				</ul>
+				<h4 class="list-header grey text-center">Total Pembayaran</h4>
+				<ul class="transaction-success no-margin-top">
+					<li class="trans-subtitle">Rp {{ paymentcode.transaction_detail.total_price | customnumber }}</li>
+				</ul>
+			
+				<div class="transaction-info how-to-pay no-margin-bottom" *ngIf="cpatm">
+					<h4 class="list-header">Cara Pembayaran:</h4>
+					<ul class="list-type-inside-list list-detail">
+					<ol>
+						<li>Pilih Menu TRANSAKSI LAINNYA pada ATM</li>
+						<li>Lalu pilih TRANSAKSI PEMBAYARAN</li>
+						<li>Pilih Jenis Pembayaran TELEPON/HANDPHONE</li>
+						<li>Masukkan 12 digit Payment Code di atas dengan tepat (021xxx "tanpa 0 di depan)</li>
+						<li>Periksa kembali Payment Code Anda dan pilih YA untuk melanjutkan pembayaran</li>
+						<li>Simpan Bukti Pembayaran yang Anda dapatkan</li>
+					</ol>
+					</ul>
+				</div>
+
+				<div class="transaction-info how-to-pay no-margin-bottom" *ngIf="cplocalstore">
+					<h4 class="list-header">Cara Pembayaran:</h4>
+					<ul class="list-type-inside-list list-detail">
+						<li>Dapatkan kode pembayaran setelah menekan tombol Bayar, lalu tunjukan ke kasir dan bayar sesuai tagihan.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="order-now continue">
+			<button class="btn" (click)="cekstatus()">Cek Status Pembayaran</button>
+		</div>
+	</div>
+</section>

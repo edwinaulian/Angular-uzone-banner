@@ -1,0 +1,87 @@
+<section id="">
+	<div class="header">
+		<div class="back-btn-show" (click)="stay()"><img src="assets/img/back-page.png"> Pembayaran</div>
+	</div>
+	
+	<div class="detail-package">
+		<div class="ons-detail">
+			<div class="package-step">
+			  <ul>
+				  <li class="step done"><span class="center"><span class="no">1</span> Pesan</span></li>
+					<li class="step done"><span class="center"><span class="no">2</span> Bayar</span></li>
+					<li class="step done"><span class="center"><span class="no">3</span> Proses</span></li>
+					<li class="step"><span class="center"><span class="no">4</span> E-Tiket</span></li>
+				</ul>
+			</div>
+		</div>
+	
+		<div class="ons-detail">
+			<div class="fill-input">
+				<h4 class="list-header main">{{ bannerDetail?.detailtours.data.name }}</h4>
+					<ul class="list-of-steps">
+						<li>{{ bannerDetail?.detailtours.data.trip_date | date :'dd MMMM yyyy' }}</li>
+						<li>x {{ paymentcode?.detailordertrans.data.num_package }} Paket<span class="status-payment waiting">{{ paymentcode?.detailordertrans.data.payment_status }}</span></li>
+					</ul>
+			</div>	
+		</div>
+					
+		<div class="ons-detail">
+			<ul class="info-finish-payment">
+				<li class="clearfix">
+					<div class="left">Selesaikan pembayaran sebelum</div>
+						<div class="right">
+							<p>
+								<count-down [text]="text" units="Hours | Minutes | Seconds " end="{{ paymentcode?.detailordertrans.data.expired_at }}"></count-down>
+								<span id="demo-payment"></span></p>
+						</div>
+				</li>
+			</ul>
+
+			<div class="total-order">
+				<ul class="list-of-steps no-border-bottom incl-separator">
+					<li class="clearfix">
+						<div class="left">Kode Pembayaran</div>
+						<div class="right bold">{{ paymentcode?.detailordertrans.data.payment_code }} <a (click)="copyText(paymentcode?.detailordertrans.data.payment_code)" value="click to copy" class="copy" showOnClick>Salin</a></div>
+					</li>
+					<li class="clearfix">
+						<div class="left">Tanggal Pesanan</div>
+						<div class="right bold">{{ todays }}</div>
+					</li>
+					<li class="clearfix">
+						<div class="left">Total Pembayaran</div>
+						<div class="right bold">Rp. {{ paymentcode?.detailordertrans.data.total_price | customnumber  }} </div>
+					</li>
+					<li class="clearfix">
+						<div class="left">Nama Pemesan</div>
+						<div class="right bold">{{ paymentcode?.detailordertrans.data.user_name }}</div>
+					</li>
+					<li class="clearfix">
+						<div class="left">Alamat Email</div>
+						<div class="right bold">{{ paymentcode?.detailordertrans.data.email }}</div>
+					</li>
+				</ul>
+
+				<div class="transaction-info how-to-pay no-margin-bottom" *ngIf="cpatm">
+					<h4 class="list-header">Cara Pembayaran</h4>
+					<ul class="list-type-inside-list list-detail">
+						<ol>
+							<li>Pilih Menu TRANSAKSI LAINNYA pada ATM</li>
+							<li>Lalu pilih TRANSAKSI PEMBAYARAN</li>
+							<li>Pilih Jenis Pembayaran TELEPON/HANDPHONE</li>
+							<li>Masukkan 12 digit Payment Code di atas dengan tepat (021xxx "tanpa 0 di depan)</li>
+							<li>Periksa kembali Payment Code Anda dan pilih YA untuk melanjutkan pembayaran</li>
+							<li>Simpan Bukti Pembayaran yang Anda dapatkan</li>
+						</ol>
+					</ul>
+				</div>
+
+				<div class="transaction-info how-to-pay no-margin-bottom" *ngIf="cplocalstore">
+					<h4 class="list-header">Cara Pembayaran:</h4>
+						<ul class="list-type-inside-list list-detail">
+							<li>Dapatkan kode pembayaran setelah menekan tombol Bayar, lalu tunjukan ke kasir dan bayar sesuai tagihan.</li>
+						</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

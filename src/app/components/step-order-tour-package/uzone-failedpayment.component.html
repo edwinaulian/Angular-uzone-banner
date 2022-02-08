@@ -1,0 +1,25 @@
+  	<section id="mycontent">
+	    <div class="headers">
+	      <div class="header-title"><img src="assets/img/uzone.png"></div>
+	    </div>
+	    <div class="detail-packages padding-top-15">
+			  <div class="ons-detail">
+			  	<div class="fill-input">
+			  		<div class="text-centers logo-icecream">
+				  		<img src="assets/img/icongagal.png">
+				  	</div>
+				</div>
+				</div>
+			  <div class="ons-detail">
+				<div class="term-conditions">
+					<h2 style="text-align: center;">Pembayaran Gagal</h2>
+					<p style="text-align: center;" class="term">Pembayaran Via {{ paymentcode?.detailordertrans?.data.bank }} untuk transaksi dengan invoice number {{ paymentcode?.detailordertrans?.data.trx_id }}
+						dan total amount Rp {{ paymentcode?.detailordertrans?.data.total_price | customnumber }}
+						anda gagal, mohon dicoba kembali</p>
+				</div>
+				</div>
+				<div class="order-nows">
+					<button class="btn" (click)="backtoorder()">Pesan Kembali</button>
+			 </div>
+		</div>
+	</section>

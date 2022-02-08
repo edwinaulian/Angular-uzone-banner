@@ -1,0 +1,228 @@
+<section id="" *ngIf="step2">
+	<div class="header">
+	    <div class="back-btn-show" (click)="goback()"><img src="assets/img/back-page.png"> Metode Pembayaran</div>
+	</div>
+	<div class="detail-package">
+		<div class="ons-detail">
+		 	<div class="package-step">
+		  		<ul>
+				    <li class="step done"><span class="center"><span class="no">1</span> Pesan</span></li>
+				    <li class="step done"><span class="center"><span class="no">2</span> Bayar</span></li>
+				    <li class="step"><span class="center"><span class="no">3</span> Proses</span></li>
+				    <li class="step"><span class="center"><span class="no">4</span> E-Tiket</span></li>
+			  	</ul>
+			</div>
+		</div>
+			  
+		<div class="ons-detail">
+			<div class="fill-input">
+			  	<h4 class="list-header main">{{ bannerDetail?.detailtours.data.name }}</h4>
+				  	<ul class="list-of-steps">
+						<li>{{ bannerDetail?.detailtours.data.trip_date  | date:'dd MMMM yyyy'}}</li>
+						<li>x {{ order_num.order_item.num_of_package }} Paket</li>
+					</ul>
+			</div>
+		</div>
+
+		<div class="ons-detail">
+			<div class="total-order">
+				<h4 class="list-header grey">Informasi Pemesanan</h4>
+				    <ul class="list-of-steps incl-separator order-information-list">
+						<li class="clearfix">
+							<div class="left">Nama Pemesan</div>
+						  	<div class="right bold">{{ namevalue }}</div>
+						</li>
+						<li class="clearfix">
+						  	<div class="left">No. Handphone</div>
+						  	<div class="right bold">+62 {{ phonevalue }}</div>
+						</li>
+						<li class="clearfix">
+						  	<div class="left">Alamat Email</div>
+						  	<div class="right bold">{{ emailvalue }}</div>
+						</li>
+					</ul>
+			</div>
+			<p *ngIf="isValidFormSubmitted && paymentmetod.pristine" [ngClass]="'success'">
+					Form Submitted Successfully
+			</p>
+			<form [formGroup]="paymentmetod" (ngSubmit)="onSubmitPaymentMethod(f)" #f="ngForm">
+			<div class="total-order">
+				<h4 class="list-header grey">Pilih Pembayaran</h4>
+					<div class="ons-detail">
+						<div id="accordion" class="expandable-accordion choose-payment">
+							<div class="box-expand expandable-accordion" *ngIf="atm">
+								<ul class="list-of-steps incl-separator order-information-list">
+									<input id="toggle-1" type="checkbox">
+									<label for="toggle-1">	
+										<li class="clearfix">
+											<div class="left">ATM<br>Payment Code</div>
+											<div class="right"> <span class="best-deal" *ngIf="bestdealatm">Best Deal</span> Rp {{ pricevalueatms | customnumber }}</div>
+										</li>
+									</label>
+								
+									<div id="expand" class="expand">
+										<div class="expandable-content">
+											<div class="panel-body">
+													<ul class="bank-name-atm">
+															<li class="none">
+																<input type="radio" id="atmbca" formControlName="bank" value="bca" (click)="change()">
+																<label for="atmbca" class="clearfix"><img src="assets/img/logoATM/BCA_logo.png"><span></span></label>				
+																<div class="check"></div>
+															</li>
+															
+															<li>
+																<input type="radio" id="atmbni" formControlName="bank" value="bni" (click)="change()">
+																<label for="atmbni" class="clearfix"><img src="assets/img/logoATM/BNI_logo.png"><span></span></label>
+																<div class="check"><div class="inside"></div></div>
+															</li>
+																	
+															<li>
+																<input type="radio" id="atmbri" formControlName="bank" value="bri" (click)="change()">
+																<label for="atmbri" class="clearfix"><img src="assets/img/logoATM/BRI_logo.png"><span></span></label>
+																<div class="check"><div class="inside"></div></div>
+															</li>
+						
+															<li>
+																<input type="radio" id="atmmandiri" formControlName="bank" value="mandiri" (click)="change()">
+																<label for="atmmandiri" class="clearfix"><img src="assets/img/logoATM/Mandiri_logo.png"><span></span></label>
+																<div class="check"><div class="inside"></div></div>
+															</li>
+
+															<li>
+																<input type="radio" id="atmcimb" formControlName="bank" value="cimb" (click)="change()">
+																<label for="atmcimb" class="clearfix"><img src="assets/img/logoATM/CIMB_logo.png"><span></span></label>
+																<div class="check"><div class="inside"></div></div>
+															</li>
+
+															<li>
+																<input type="radio" id="atmpermatabank" formControlName="bank" value="permatabank" (click)="change()">
+																<label for="atmpermatabank" class="clearfix"><img src="assets/img/logoATM/Permata_logo.png"><span></span></label>
+																<div class="check"><div class="inside"></div></div>
+															</li>
+													</ul>
+											</div>
+										</div>
+									</div>
+								</ul>
+							</div>
+
+							<div class="box-expand expandable-accordion" *ngIf="mbanking">
+								<ul class="list-of-steps incl-separator order-information-list">
+									<input id="toggle-2" type="checkbox">
+									<label for="toggle-2">	
+										<li class="clearfix">
+										<div class="left">M-Banking<br>Payment Code</div>
+										<div class="right"><span class="best-deal" *ngIf="bestdealmbanking">Best Deal</span>Rp {{ pricevaluembankings | customnumber }}</div>
+										</li>
+									</label>
+								
+									<div id="expand" class="expand">
+										<div class="expandable-content">
+											<div class="panel-body">
+												<ul class="bank-name">
+													<li class="none">
+														<input type="radio" id="mbbca" formControlName="bank" value="M-Banking BCA" (click)="change()">
+														<label for="mbbca" class="clearfix"><img src="assets/img/logoMBanking/logo-bca.png"><span></span></label>				
+														<div class="check"></div>
+													</li>
+													
+													<li>
+														<input type="radio" id="mbbri" formControlName="bank" value="M-Banking BRI" (click)="change()">
+														<label for="mbbri" class="clearfix"><img src="assets/img/logoMBanking/logo-bri.png"><span></span></label>
+														<div class="check"><div class="inside"></div></div>
+													</li>
+															
+													<li>
+														<input type="radio" id="mbmandiri" formControlName="bank" value="M-Banking MANDIRI" (click)="change()">
+														<label for="mbmandiri" class="clearfix"><img src="assets/img/logoMBanking/logo-mandiri.png"><span></span></label>
+														<div class="check"><div class="inside"></div></div>
+													</li>
+				
+													<li>
+														<input type="radio" id="mbbni" formControlName="bank" value="M-Banking BNI" (click)="change()">
+														<label for="mbbni" class="clearfix"><img src="assets/img/logoMBanking/logo-bni.png"><span></span></label>
+														<div class="check"><div class="inside"></div></div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</ul>
+							</div>
+
+							<div class="box-expand expandable-accordion" *ngIf="localstore">
+								<ul class="list-of-steps incl-separator order-information-list">
+									<input id="toggle-3" type="checkbox">
+									<label for="toggle-3">	
+										<li class="clearfix">
+										<div class="left">Local Store</div>
+										<div class="right"><span class="best-deal" *ngIf="bestdeallocalstore">Best Deal</span>Rp {{ pricevaluelocalstores | customnumber }}</div>
+										</li>
+									</label>
+								
+									<div id="expand" class="expand">
+										<div class="expandable-content">
+											<div class="panel-body">
+												<ul class="bank-name-lc">
+													<li class="none">
+														<input type="radio" id="alfamart" formControlName="bank" value="Alfamart" (click)="change()">
+														<label for="alfamart" class="clearfix"><img src="assets/img/Payment_Alfamart.png"><span></span></label>				
+														<div class="check"></div>
+													</li>
+													
+													<li>
+														<input type="radio" id="indomaret" formControlName="bank" value="Indomaret" (click)="change()">
+														<label for="indomaret" class="clearfix"><img src="assets/img/Payment_Indomaret.png"><span></span></label>
+														<div class="check"><div class="inside"></div></div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</ul>
+							</div>
+						</div>
+
+						<div class="choose-payment" *ngIf="cc">
+							<ul class="list-of-steps incl-separator order-information-list bank-name">
+								<li class="clearfix radio-toggle">
+									<input 
+										type="radio" 
+										id="credit-card" 
+										formControlName="bank" 
+										value="creditcard"
+										(click)="changecredit()">
+										<label for="credit-card" class="clearfix">
+											<div class="left">Credit Card</div>
+											<div class="right"><span class="best-deal" *ngIf="bestdealcc">Best Deal</span>Rp {{ pricevaluecreditcards | customnumber }}</div>
+										</label>	    
+										<div class="check"><div class="inside"></div></div>
+								</li>
+							</ul>
+						</div>	
+						<p class="view-term">Dengan mengklik "Lanjut ke Pembayaran" Anda menyetujui <a [routerLink]="['/paket-wisata/term-condition']"  routerLinkActive="active" uzonelink>Syarat dan Ketentuan</a> yang berlaku</p>
+
+						<div class="order-now continue">
+							<button class="btn" disabled="" *ngIf="checkboxempthy">Lanjut ke Pembayaran</button>
+							<div *ngIf="cash">
+								<button class="btn" type="submit" *ngIf="checkboxadded">
+									Lanjut ke Pembayaran</button>
+							</div>
+							<div *ngIf="cashdisable">
+									<button class="btn" type="submit" disabled="">
+									<i *ngIf="loadshow" class="fa fa-spinner fa-spin"></i>Lanjut ke Pembayaran</button>
+							</div>
+							<div *ngIf="credit">
+								<button class="btn" type="submit" *ngIf="checkboxadded">Lanjut ke Pembayaran</button>
+							</div>
+						</div>
+					</div>
+			</div>
+			</form>
+		</div>
+	</div>
+</section>
+
+<div *ngIf="step3">
+	<uzone-thirtystep [bannerDetail]="bannerDetail" [paymentcode]="paymentcode" *ngIf="paymentcode"></uzone-thirtystep>
+</div>

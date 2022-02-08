@@ -1,0 +1,257 @@
+  	<section id="" *ngIf="order"> 
+	    <div class="header">
+	      <div class="back-btn-show" (click)="goback()"><img src="assets/img/back-page.png"> Pemesanan</div>
+		</div>
+			<p *ngIf="isValidFormSubmitted && formIndentitas.pristine" [ngClass]="'success'">
+				Form Submitted Successfully
+			</p>
+	<form [formGroup]="formIndentitas" (ngSubmit)="onFormSubmit(f)" #f="ngForm">
+	    <div class="detail-package">
+			  <div class="ons-detail">
+			  	<div class="package-step">
+			  		<ul>
+					    <li class="step done"><span class="center"><span class="no">1</span> Pesan</span></li>
+					    <li class="step"><span class="center"><span class="no">2</span> Bayar</span></li>
+					    <li class="step"><span class="center"><span class="no">3</span> Proses</span></li>
+					    <li class="step"><span class="center"><span class="no">4</span> E-Tiket</span></li>
+					  </ul>
+				  </div>
+			  </div>
+			  <div class="ons-detail">
+			  	<div class="fill-input">
+				  	<h4 class="list-header main">{{ bannerDetail?.detailtours.data.name }}</h4>
+				  	<ul class="list-of-steps">
+						  <li>{{ bannerDetail?.detailtours.data.trip_date | date:'dd MMMM yyyy' }}</li>
+						</ul>
+					</div>
+				</div>
+				<div class="ons-detail">
+					<h2 class="order-information">Informasi Pemesanan</h2>	
+				    <input type="hidden" readonly formControlName="package_id" value="{{ id }}">
+					<input type="hidden" readonly formControlName="price" value="{{ display_price | customnumber }}">
+					<input type="hidden" readonly formControlName="priceatm" value="{{ pricevalueatm | customnumber }}">
+					<input type="hidden" readonly formControlName="pricemb" value="{{ pricevaluembanking | customnumber }}">
+					<input type="hidden" readonly formControlName="pricelc" value="{{ pricevaluelocalstore | customnumber }}">
+					<input type="hidden" readonly formControlName="pricecc" value="{{ pricevaluecreditcard | customnumber }}">
+				<p class="fill-input">
+				  	<label>Title</label>
+			      <select class="form-control" id="titleField" formControlName="cust_title" required>
+					<option value="" disabled selected hidden>Silakan Pilih</option>
+					<option value="tuan"> Tuan</option>
+					<option value="nyonya">Nyonya</option>
+					<option value="nona">Nona</option>
+		          </select>
+				</p>
+				<div *ngIf="formIndentitas.get('cust_title').invalid && isValidFormSubmitted != null && !isValidFormSubmitted" [ngClass] = "'error'"> 
+					<p style="color:red; font-size: 11px; margin-left: 15px; margin-bottom: 15px;"> *Title tidak boleh kosong. </p>
+				</div>
+			    <p class="fill-input">
+				  	<label>Nama Lengkap Pemesan</label>
+						<input 
+						type="text" 
+						class="form-control"
+						(keypress)="charOnlys($event)"
+						formControlName="cust_name"
+						modifier="underbar" 
+						maxlength="50"
+						required
+						(input)="cust_name = $event.target.value"
+						[(ngModel)]="input_name"
+						placeholder="Ketik Nama Anda">
+				</p>
+
+				<div *ngIf="formIndentitas.get('cust_name').invalid && isValidFormSubmitted != null && !isValidFormSubmitted" [ngClass] = "'error'"> 
+					<p style="color:red; font-size: 11px; margin-left: 15px; margin-bottom: 15px;"> *Nama lengkap tidak boleh kosong. </p>
+				</div>
+			    <p class="fill-input">
+					  <label>No. Handphone (mungkin saja terjadi hal yang darurat)</label>
+					<span class="input-group no-hp">
+						<span class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1">+62 </span>
+						</span>
+						<input 
+							type="text" 
+							[textMask]="{mask: phoneMask}"
+							class="form-control"
+							maxlength="12"
+							minlength="11"
+							formControlName="phone" 
+							modifier="underbar"
+							required 
+							[(ngModel)]="input_phone"
+						>					 
+					</span>
+				</p>
+				<div *ngIf="formIndentitas.get('phone').invalid && isValidFormSubmitted != null && !isValidFormSubmitted" [ngClass] = "'error'"> 
+					<p style="color:red; font-size: 11px; margin-left: 15px; margin-bottom: 15px;"> *No Handphone tidak boleh kosong. </p>
+				</div>
+			    <p class="fill-input">
+				  	<label>Alamat Email (untuk menerima voucher)</label>
+						<input 
+						type="text" 
+						class="form-control"
+						formControlName="email" 
+						modifier="underbar" 
+						required
+						[(ngModel)]="input_email"
+						placeholder="contoh: email@example.com">
+				</p>
+				<div *ngIf="isValidFormSubmitted != null &&  formIndentitas.get('email').untouched" [ngClass] = "'error'"> 
+					<p style="color:red; font-size: 11px; margin-left: 15px; margin-bottom: 15px;"> *Alamat email tidak boleh kosong.</p>
+				</div>
+				<div *ngIf="formIndentitas.get('email').invalid && formIndentitas.get('email').touched" [ngClass]="'error'">
+					<p style="color:red; font-size: 11px; margin-left: 15px; margin-bottom: 15px;"> *Alamat email salah. </p>
+				</div>
+			    <div class="grey-separator">
+						<div class="alert error" *ngIf="error">
+							<input type="checkbox" id="alert1"/>
+								<label class="close" title="close" for="alert1">
+								 <i class="icon-remove"></i>
+								</label>
+								<p class="inner">
+								 Jumlah Pembelian Paket minimal {{ minpaket }}
+								</p>
+						</div>
+
+						<div class="alert error" *ngIf="errorplus">
+							<input type="checkbox" id="alert2"/>
+								<label class="close" title="close" for="alert2">
+								<i class="icon-remove"></i>
+								</label>
+								<p class="inner">
+								 Jumlah Pembelian Paket Maksimal {{ maxpaket }}
+								</p>
+						</div>
+
+						<div class="alert error" *ngIf="errorstock">
+							<input type="checkbox" id="alert3"/>
+								<label class="close" title="close" for="alert3">
+								<i class="icon-remove"></i>
+								</label>
+								<p class="inner">
+									Paket yang tersedia adalah {{ stock }} Paket.
+									Jumlah pemesanan yang anda inputkan tidak tersedia,
+									mohon inputkan ulang atau pilih paket lain.
+								</p>
+						</div>
+				</div>
+			    <div class="total-order">
+				    <h4 class="list-header grey">Banyak Pesanan</h4>
+				    <ul class="list-of-steps incl-separator no-border-bottom">
+						  <li class="clearfix">
+						  	<div class="left">Jumlah Paket</div>
+						  	<div class="right">		  		
+								<div id="decrease" *ngIf="minnotfull">
+									<button type="button" class="input-group-text" id="basic-addon1" tabindex="-1" (click)="minnumber()"><i class="fa fa-minus" id="plusemin"></i></button>
+								</div>
+								<div id="decrease" *ngIf="minfull">
+									<button type="button" style="cursor:not-allowed;" disabled class="input-group-text" id="basic-addon1" tabindex="-1" (click)="minnumber()"><i class="fa fa-minus"></i></button>
+								</div>
+								   <div id="range">
+									<input type="text"
+									readonly 
+									(keypress)="numberOnly($event)" 
+									formControlName="num_of_package" 
+									min="{{ minpaket }}" 
+									max="{{ stock }}" 
+									class="inputnumber"
+									>
+									</div>
+								<div id="increase" *ngIf="plusnotfull">
+									<button  type="button" class="input-group-text" tabindex="-1"  (click)="plusenumber()" ><i class="fa fa-plus" id="plusemin"></i></button>
+							    </div>
+							   	<div id="increase" *ngIf="plusfull">
+									<button type="button" style="cursor:not-allowed;" disabled class="input-group-text" tabindex="-1"  (click)="plusenumber()" ><i class="fa fa-plus"></i></button>
+						   	    </div>
+							  </div>
+							  <div class="right bold">								
+							</div>
+						  </li>
+						  <li class="clearfix">
+							  <div class="left">Total Pembayaran</div>
+								<div class="right bold">
+									<div class="curren">Rp.</div>
+									<input type="text"
+									readonly 
+									(keypress)="numberOnly($event)" 
+									formControlName="display_price" 
+									value="{{ display_price | customnumber }}"
+									class="imputnumbers" 
+									[(ngModel)]="display_price"
+									>
+									<input type="hidden"
+									readonly 
+									(keypress)="numberOnly($event)" 
+									formControlName="pricevalueatm" 
+									value="{{ pricevalueatm | customnumber }}"
+									class="imputnumbers" 
+									[(ngModel)]="pricevalueatm"
+									>
+									<input type="hidden"
+									readonly 
+									(keypress)="numberOnly($event)" 
+									formControlName="pricevaluembanking" 
+									value="{{ pricevaluembanking | customnumber }}"
+									class="imputnumbers" 
+									[(ngModel)]="pricevaluembanking"
+									>
+									<input type="hidden"
+									readonly 
+									(keypress)="numberOnly($event)" 
+									formControlName="pricevaluelocalstore" 
+									value="{{ pricevaluelocalstore | customnumber }}"
+									class="imputnumbers" 
+									[(ngModel)]="pricevaluelocalstore"
+									>
+									<input type="hidden"
+									readonly 
+									(keypress)="numberOnly($event)" 
+									formControlName="pricevaluecreditcard" 
+									value="{{ pricevaluecreditcard | customnumber }}"
+									class="imputnumbers" 
+									[(ngModel)]="pricevaluecreditcard"
+									>
+								</div>
+								<div class="right bold">								
+									<p class="description" *ngIf="ppn">* Harga belum termasuk PPN</p>
+									<p class="description" *ngIf="freeppn">* Harga sudah termasuk PPN</p>
+								</div>
+						  </li>
+						</ul>
+					</div>
+				</div>
+				<div class="order-now continue" id="float" *ngIf="btnenable">
+					 <button class="btn" type="submit"  [disabled]="f.form.invalid">Pilih Metode Pembayaran</button>
+				</div>
+				<div class="order-now continue" id="float" *ngIf="btndisable">
+				   <button class="btn" type="submit" disabled=""><i class="fa fa-spinner fa-spin"></i>Pilih Metode Pembayaran</button> 
+			   </div>
+			   <div class="order-now continue" id="float" *ngIf="btnenableval">
+				<button class="btn" type="submit">Pilih Metode Pembayaran</button>
+		  	   </div>
+			</div>
+	</form>
+</section> 
+
+<div *ngIf="payment">
+	<uzone-secondstep 
+	[bannerDetail]="bannerDetail"
+	[order_num]="order_num" 
+	*ngIf="order_num"  
+	[namevalue]="input_name" 
+	[phonevalue]="input_phone" 
+	[emailvalue]="input_email" 
+	[hes]="display_price"
+	[pricevalueatms]="pricevalueatm"
+	[pricevaluembankings]="pricevaluembanking" 
+	[pricevaluelocalstores]="pricevaluelocalstore" 
+	[pricevaluecreditcards]="pricevaluecreditcard"
+	[realpriceatm]="realpriceatm"
+	[realpricembanking]="realpricembanking"
+	[realpricelc]="realpricelc"
+	[realpricecc]="realpricecc"
+	[tax] = "tax"
+	[admin_fee]= "admin_fee"
+	>
+	</uzone-secondstep>
+</div>

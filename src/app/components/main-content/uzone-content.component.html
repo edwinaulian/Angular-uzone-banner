@@ -1,0 +1,44 @@
+<div>
+    <div class="header" *ngIf="!detail">
+        <ng-template [ngIf]="bannerLanding?.data?.length">
+            <div class="content-desktop">
+                <div class="content-wrap">
+                    <img [routerLink]="['paket-wisata/'+slugdetail]" routerLinkActive="active" uzonelink src="{{ bannerLanding?.data[0].images[0].name }}">
+                </div>
+            </div>
+        </ng-template>
+    </div>
+    <div class="content" *ngIf="detail">
+        <uzone-detailtourpackage [bannerDetail]="bannerDetail" [percent_discount]="percent_discount" [stock]="stock" [images]="images" [otherpackagetour]="otherpackagetour" [percent_discount]="percent_discount" *ngIf="(images) || (facility)"  [facility]=facility [description]=description [inclusive]=inclusive [exclusive]=exclusive [confirmation]=confirmation [trip_plan]=trip_plan  [add_information]=add_information [tips]=tips [use_ticket]=use_ticket [opening_hours]=opening_hours [location]=location [canceled_policy]=canceled_policy [latitude]=latitude [longitude]=longitude></uzone-detailtourpackage>
+    </div>
+    <div class="order1" *ngIf="orderpesan">
+        <uzone-firststep [paymentcode]="orderDetail" [atmpricem]="atmpricem" [name]="name" [trx_id]="trx_id" [bannerDetail]="bannerDetail" [tax]="tax" [admin_fee]="admin_fee" [pricevalueatm]="pricevalueatm" [pricevaluembanking]="pricevaluembanking" [pricevaluelocalstore]="pricevaluelocalstore" [pricevaluecreditcard]="pricevaluecreditcard" [realpriceatm]="realpriceatm" [realpricembanking]="realpricembanking" [realpricelc]="realpricelc" [realpricecc]="realpricecc" [stock]="stock" [display_price]=display_price [id]=id *ngIf="(id)"></uzone-firststep>
+    </div>
+    <div class="order2" *ngIf="orderbayar">
+        <!-- <uzone-secondstep [bannerDetail]="bannerDetail" [namevalue]="input_name" [phonevalue]="input_phone" [emailvalue]="input_email"></uzone-secondstep> -->
+    </div>
+    <div class="order21" *ngIf="orderbayarcredit">
+        <uzone-secondstep-creditcard [bannerDetail]="bannerDetail"></uzone-secondstep-creditcard>
+    </div>
+    <div class="order3" *ngIf="orderproses">
+        <uzone-thirtystep [bannerDetail]="bannerDetail"></uzone-thirtystep>
+    </div>
+    <div class="order3cekstatus" *ngIf="orderprosescekstatus">
+        <uzone-thirtystep-checkstatus [bannerDetail]="bannerDetail" [paymentcode]="orderDetail" [amount]="amount" [trx_id]="trx_id" [payment_status]="payment_status" [bank]="bank" *ngIf="orderDetail" ></uzone-thirtystep-checkstatus>
+    </div>
+    <div class="term" *ngIf="termcondition">
+        <uzone-term-condition [termconditionpage]="termconditionpage" *ngIf="termconditionpage"></uzone-term-condition>
+    </div>
+    <div class="waiting-payment" *ngIf="waiting">
+        <uzone-waiting></uzone-waiting>    
+    </div>
+    <div class="e-tiket" *ngIf="etiket">
+        <uzone-etiket [paymentcode]="orderDetail" [amount]="amount" [trx_id]="trx_id" *ngIf="orderDetail" [bannerDetail]="bannerDetail"></uzone-etiket>
+    </div>
+    <div *ngIf="failedpayment">
+        <uzone-failedpayment [paymentcode]="orderDetail" *ngIf="orderDetail" [trx_id]="trx_id"></uzone-failedpayment>
+    </div>
+    <div class="pesanansaya" *ngIf="pesanan">
+        <uzone-detailorder  [bannerDetail]="bannerDetail" [paymentcode]="orderDetail" *ngIf="orderDetail"></uzone-detailorder>
+    </div>
+</div>

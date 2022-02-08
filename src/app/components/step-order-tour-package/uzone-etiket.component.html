@@ -1,0 +1,59 @@
+  	<section id="">
+	    <div class="header">
+	      <div class="back-btn-show" (click)="goback()"><img src="assets/img/back-page.png"> Detail Transaksi</div>
+	    </div>
+	    <div class="detail-package">
+			  <div class="ons-detail">
+			  	<div class="package-step">
+			  		<ul>
+					    <li class="step done"><span class="center"><span class="no">1</span> Pesan</span></li>
+					    <li class="step done"><span class="center"><span class="no">2</span> Bayar</span></li>
+					    <li class="step done"><span class="center"><span class="no">3</span> Proses</span></li>
+					    <li class="step done"><span class="center"><span class="no">4</span> E-Tiket</span></li>
+					  </ul>
+				  </div>
+			  </div>
+
+			  <div class="ons-detail">
+			  	<div class="total-order">
+
+						<h4 class="list-header grey text-center">{{ paymentcode?.detailordertrans.data.trx_id }}</h4>
+						<h3 class="trans-title">Transaksi Berhasil</h3>
+
+						<div class="round-success">
+							<i class="fa fa-check"></i>
+						</div>
+
+						<h4 class="say-thanks no-margin-bottom">Terima kasih telah memilih Uzone Travel sebagai partner liburan Anda</h4>
+					</div>
+
+					<div class="total-order">
+
+						<h4 class="list-header grey text-center">Nama Item</h4>
+						<ul class="transaction-success no-margin-top">
+						  <li class="trans-subtitle text-center">{{  bannerDetail?.detailtours.data.name }}</li>
+						</ul>
+
+						<h4 class="list-header grey text-center">Tanggal Perjalanan</h4>
+						<ul class="transaction-success no-margin-top">
+						  <li class="trans-subtitle">{{  bannerDetail?.detailtours.data.trip_date | date:'dd MMMM yyyy' }}</li>
+						</ul>
+
+						<h4 class="list-header grey text-center">Total Pembayaran</h4>
+						<ul class="transaction-success no-margin-top">
+							<li class="trans-subtitle">Rp. {{ paymentcode?.detailordertrans.data.total_price | customnumber  }}</li>
+
+						</ul>
+
+						<div class="transaction-info">
+							<ul class="list-type-inside-list list-detail text-center no-style-type">
+							  <li>Silakan periksa kotak masuk email dan SMS Anda untuk melihat Tiket</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="order-now continue">
+				 	<button class="btn" (click)="myorder()">Lihat Pesanan Saya</button>
+				</div>
+			</div>
+	  </section>

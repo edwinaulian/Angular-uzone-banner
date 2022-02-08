@@ -1,0 +1,22 @@
+<section id="">
+	<div class="header">
+	    <div class="back-btn-show"><a><img routerLink="" src="assets/img/back-page.png"> Syarat Dan Ketentuan</a></div>
+	</div>
+
+	<div class="detail-package padding-top-15">
+		<div class="ons-detail">
+			<div class="fill-input">
+			  	<div class="text-center logo-uzone">
+					<img src="assets/img/uzone.png">
+				</div>
+			</div>
+		</div>
+
+		<div class="ons-detail">
+			<div class="term-condition">
+				<h4 class="list-header fs-14">{{ termconditionpage?.data?.title }}</h4>
+				<p [innerHTML]="termconditionpage?.data?.content | inhtml"></p>
+			</div>
+		</div>
+	</div>
+</section>

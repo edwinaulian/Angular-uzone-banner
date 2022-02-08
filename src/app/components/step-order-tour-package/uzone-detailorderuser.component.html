@@ -1,0 +1,50 @@
+<section id="">
+	<div class="header">
+	    <div class="back-btn-show" (click)="goback()"><img src="assets/img/back-page.png"> Pesanan Saya</div>
+	</div>
+	<div class="detail-package">
+			  
+		<div class="ons-detail">
+			<div class="fill-input">
+			  	<h4 class="list-header main">{{ bannerDetail?.detailtours.data.name  }}</h4>
+				  	<ul class="list-of-steps">
+						<li>{{ bannerDetail?.detailtours.data.trip_date | date:'dd MMMM yyyy' }}</li>
+						<li>x {{ paymentcode?.detailordertrans.data.num_package }} Paket <span class="status-payment success">{{ paymentcode?.detailordertrans.data.payment_status }}</span></li>
+					</ul>
+			</div>
+		</div>
+
+		<div class="ons-detail">
+			<div class="total-order">
+				<h4 class="list-header grey">Informasi Pemesanan</h4>
+				    <ul class="list-of-steps incl-separator order-information-list">
+						<li class="clearfix">
+							<div class="left">No. Pesanan</div>
+						  	<div class="right bold">{{  paymentcode?.detailordertrans.data.trx_id }}</div>
+						</li>
+						<li class="clearfix">
+						  	<div class="left">Nama Pemesan</div>
+						  	<div class="right bold">{{ paymentcode?.detailordertrans.data.user_name }}</div>
+						</li>
+						<li class="clearfix">
+						  	<div class="left">Tanggal Pemesanan</div>
+						  	<div class="right bold">{{ today | date:'dd MMMM yyyy'  }}</div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="left">Total Pembayaran</div>
+                            <div class="right bold">Rp. {{ paymentcode?.detailordertrans.data.total_price | customnumber }}</div>
+                      </li>
+					</ul>
+			</div>
+        </div>
+        
+        <div class="transaction-infoorder how-to-pay no-margin-bottom">
+            <h4 class="list-header">Cara Pemakaian</h4>
+            <ul class="list-type-inside-list list-detail">
+                    <li>Anda bisa menunjukkan bukti pembayaran ini ke pemandu wisata kami tanpa perlu mencetak</li>
+                    <li>Voucher ini valid hanya untuk waktu dan tanggal tur yang telah ditentukan</li>
+                    <li>Travel agent kami akan menghubungi Anda pada H-1 untuk konfirmasi lokasi penjemputan</li>
+            </ul>
+        </div>
+	</div>
+</section>
